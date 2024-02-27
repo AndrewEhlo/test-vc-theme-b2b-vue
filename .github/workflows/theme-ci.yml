@@ -121,7 +121,15 @@ jobs:
       - name: Packaging
         run: |
           yarn compress
-
+      - name: Start deployment
+        uses: bobheadxi/deployments@main
+        id: deployment
+        with:
+          step: start
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: Development
+          no_override: false
+        
       # - name: Publish to Blob
       #   if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' || github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/master')}}
       #   id: blobRelease
@@ -166,6 +174,16 @@ jobs:
       #     asset_path: artifacts/${{ steps.blobRelease.outputs.blobId }}
       #     asset_name: ${{ steps.blobRelease.outputs.blobId }}
       #     asset_content_type: application/zip
+
+      - name: Update GitHub deployment status
+        uses: bobheadxi/deployments@main
+        if: always()
+        with:
+          step: finish
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: ${{ job.status }}
+          env: ${{ steps.deployment.outputs.env }}
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
 
       - name: Set artifactUrl value
         id: artifactUrl
