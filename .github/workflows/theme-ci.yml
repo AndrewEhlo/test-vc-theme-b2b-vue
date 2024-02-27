@@ -51,6 +51,14 @@ jobs:
         run: |
           corepack enable
 
+      - name: Start deployment
+        uses: bobheadxi/deployments@main
+        id: deployment
+        with:
+          step: start
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: Development
+
       - name: Set RELEASE_STATUS
         if: ${{ github.ref == 'refs/heads/master' && github.event_name == 'push' }}
         run: |
@@ -121,14 +129,6 @@ jobs:
       - name: Packaging
         run: |
           yarn compress
-      - name: Start deployment
-        uses: bobheadxi/deployments@main
-        id: deployment
-        with:
-          step: start
-          token: ${{ secrets.GITHUB_TOKEN }}
-          env: Development
-          no_override: false
         
       # - name: Publish to Blob
       #   if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' || github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/master')}}
