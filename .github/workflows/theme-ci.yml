@@ -52,7 +52,7 @@ jobs:
           corepack enable
 
       - name: Start deployment
-        uses: AndrewEhlo/deployments@main
+        uses: AndrewEhlo/deployments@master
         id: deployment
         with:
           step: start
@@ -176,7 +176,7 @@ jobs:
       #     asset_content_type: application/zip
 
       - name: Update GitHub deployment status
-        uses: AndrewEhlo/deployments@main
+        uses: AndrewEhlo/deployments@master
         if: always()
         with:
           step: finish
