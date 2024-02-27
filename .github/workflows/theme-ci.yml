@@ -137,18 +137,25 @@ jobs:
       #     artifactUrl: ${{ steps.blobRelease.outputs.packageUrl }}
       #     repoOrg: ${{ github.repository_owner }}
       #     downloadComment: 'Artifact URL:'
-      - name: Install VirtoCommerce.GlobalTool
-        uses: VirtoCommerce/vc-github-actions/setup-vcbuild@master
+      # - name: Install VirtoCommerce.GlobalTool
+      #   uses: VirtoCommerce/vc-github-actions/setup-vcbuild@master
         
-      - name: Publish Github Release
-        if: ${{ github.ref == 'refs/heads/master' }}
-        id: create_release
-        with:
-          changelog: ${{ steps.changelog.outputs.changelog }}
-          organization: ${{ github.repository_owner }}
-          skipString: 'Clean+Restore+Compile+WebPackBuild+Test+Publish+Compress'
-        uses: VirtoCommerce/vc-github-actions/publish-github-release@master
-
+      # - name: Publish Github Release
+      #   if: ${{ github.ref == 'refs/heads/master' }}
+      #   id: create_release
+      #   with:
+      #     changelog: ${{ steps.changelog.outputs.changelog }}
+      #     organization: ${{ github.repository_owner }}
+      #     skipString: 'Clean+Restore+Compile+WebPackBuild+Test+Publish+Compress'
+      #   uses: VirtoCommerce/vc-github-actions/publish-github-release@master
+        
+      - name: Create GH Release
+        run: |
+          gh release create ${{ env.VERSION }} \
+              --repo="$GITHUB_REPOSITORY" \
+              --title="${GITHUB_REPOSITORY#*/} ${tag#v} \
+              --notes=${{ steps.changelog.outputs.changelog }}
+              
       - name: Upload Release Asset
         if: ${{ github.ref == 'refs/heads/master' }}
         id: upload-release-asset
