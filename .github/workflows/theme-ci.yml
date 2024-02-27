@@ -155,7 +155,7 @@ jobs:
               --repo="$GITHUB_REPOSITORY" \
               --title="${GITHUB_REPOSITORY#*/} ${{ env.VERSION }}" \
               --notes=${{ steps.changelog.outputs.changelog }} \
-              '/home/runner/work/test-vc-theme-b2b-vue/test-vc-theme-b2b-vue/artifacts/vc-theme-b2b-vue-1.51.0.zip#${{ env.VERSION }}'
+              'artifacts/${GITHUB_REPOSITORY#*/}-${{ env.VERSION }}.zip#${GITHUB_REPOSITORY#*/}-${{ env.VERSION }}.zip'
               
       # - name: Upload Release Asset
       #   if: ${{ github.ref == 'refs/heads/master' }}
