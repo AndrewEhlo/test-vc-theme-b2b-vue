@@ -154,7 +154,7 @@ jobs:
           gh release create ${{ env.VERSION }} \
               --repo="$GITHUB_REPOSITORY" \
               --title="${GITHUB_REPOSITORY#*/} ${tag#v} \
-              --notes=${{ steps.changelog.outputs.changelog }}
+              --notes="${{ steps.changelog.outputs.changelog }}"
               
       - name: Upload Release Asset
         if: ${{ github.ref == 'refs/heads/master' }}
