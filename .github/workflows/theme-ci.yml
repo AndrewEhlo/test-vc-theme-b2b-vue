@@ -51,13 +51,13 @@ jobs:
         run: |
           corepack enable
 
-      - name: Start deployment
-        uses: VirtoCommerce/vc-github-actions/gh-deployments@VCST-488
-        id: deployment
-        with:
-          step: start
-          token: ${{ secrets.GITHUB_TOKEN }}
-          env: Development
+      # - name: Start deployment
+      #   uses: VirtoCommerce/vc-github-actions/gh-deployments@VCST-488
+      #   id: deployment
+      #   with:
+      #     step: start
+      #     token: ${{ secrets.GITHUB_TOKEN }}
+      #     env: Development
 
       - name: Set RELEASE_STATUS
         if: ${{ github.ref == 'refs/heads/master' && github.event_name == 'push' }}
@@ -175,15 +175,15 @@ jobs:
       #     asset_name: ${{ steps.blobRelease.outputs.blobId }}
       #     asset_content_type: application/zip
 
-      - name: Update GitHub deployment status
-        uses: VirtoCommerce/vc-github-actions/gh-deployments@VCST-488
-        if: always()
-        with:
-          step: finish
-          token: ${{ secrets.GITHUB_TOKEN }}
-          status: ${{ job.status }}
-          env: ${{ steps.deployment.outputs.env }}
-          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+      # - name: Update GitHub deployment status
+      #   uses: VirtoCommerce/vc-github-actions/gh-deployments@VCST-488
+      #   if: always()
+      #   with:
+      #     step: finish
+      #     token: ${{ secrets.GITHUB_TOKEN }}
+      #     status: ${{ job.status }}
+      #     env: ${{ steps.deployment.outputs.env }}
+      #     deployment_id: ${{ steps.deployment.outputs.deployment_id }}
 
       - name: Set artifactUrl value
         id: artifactUrl
