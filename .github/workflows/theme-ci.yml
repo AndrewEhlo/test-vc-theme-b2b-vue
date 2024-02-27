@@ -146,7 +146,7 @@ jobs:
         with:
           changelog: ${{ steps.changelog.outputs.changelog }}
           organization: ${{ github.repository_owner }}
-          skipString: 'Clean+Restore+Compile+WebPackBuild+Test+Publish'
+          skipString: 'Clean+Restore+Compile+WebPackBuild+Test+Publish+Compress'
         uses: VirtoCommerce/vc-github-actions/publish-github-release@master
 
       - name: Upload Release Asset
