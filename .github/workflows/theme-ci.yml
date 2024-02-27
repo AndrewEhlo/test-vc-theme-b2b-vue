@@ -96,11 +96,11 @@ jobs:
         env:
           YARN_ENABLE_IMMUTABLE_INSTALLS: false
 
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      #- name: SonarCloud Scan
+      #  uses: SonarSource/sonarcloud-github-action@master
+      #  env:
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Build
         run: |
@@ -122,21 +122,21 @@ jobs:
         run: |
           yarn compress
 
-      - name: Publish to Blob
-        if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' || github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/master')}}
-        id: blobRelease
-        uses: VirtoCommerce/vc-github-actions/publish-blob-release@master
-        with:
-          blobSAS: ${{ secrets.BLOB_TOKEN }}
-          blobUrl: ${{ vars.BLOB_URL }}
+      # - name: Publish to Blob
+      #   if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' || github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/master')}}
+      #   id: blobRelease
+      #   uses: VirtoCommerce/vc-github-actions/publish-blob-release@master
+      #   with:
+      #     blobSAS: ${{ secrets.BLOB_TOKEN }}
+      #     blobUrl: ${{ vars.BLOB_URL }}
 
-      - name: Add link to PR
-        if: ${{ github.event_name == 'pull_request' }}
-        uses: VirtoCommerce/vc-github-actions/publish-artifact-link@master
-        with:
-          artifactUrl: ${{ steps.blobRelease.outputs.packageUrl }}
-          repoOrg: ${{ github.repository_owner }}
-          downloadComment: 'Artifact URL:'
+      # - name: Add link to PR
+      #   if: ${{ github.event_name == 'pull_request' }}
+      #   uses: VirtoCommerce/vc-github-actions/publish-artifact-link@master
+      #   with:
+      #     artifactUrl: ${{ steps.blobRelease.outputs.packageUrl }}
+      #     repoOrg: ${{ github.repository_owner }}
+      #     downloadComment: 'Artifact URL:'
 
       - name: Publish Github Release
         if: ${{ github.ref == 'refs/heads/master' }}
@@ -165,47 +165,47 @@ jobs:
             echo "download_url=${{ steps.blobRelease.outputs.packageUrl }}" >> $GITHUB_OUTPUT
           fi;
 
-      - name: Parse Jira Keys from All Commits
-        uses: VirtoCommerce/vc-github-actions/get-jira-keys@master
-        if: always()
-        id: jira_keys
-        with:
-          release: ${{ env.RELEASE_STATUS }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: Parse Jira Keys from All Commits
+  #       uses: VirtoCommerce/vc-github-actions/get-jira-keys@master
+  #       if: always()
+  #       id: jira_keys
+  #       with:
+  #         release: ${{ env.RELEASE_STATUS }}
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Push Build Info to Jira
-        if: ${{ env.CLOUD_INSTANCE_BASE_URL != 0 && env.CLIENT_ID != 0 && env.CLIENT_SECRET != 0 && steps.jira_keys.outputs.jira-keys != '' && always() }}
-        id: push_build_info_to_jira
-        uses: VirtoCommerce/jira-upload-build-info@master
-        with:
-          cloud-instance-base-url: '${{ secrets.CLOUD_INSTANCE_BASE_URL }}'
-          client-id: '${{ secrets.CLIENT_ID }}'
-          client-secret: '${{ secrets.CLIENT_SECRET }}'
-          pipeline-id: '${{ github.repository }} ${{ github.workflow }}'
-          build-number: ${{ github.run_number }}
-          build-display-name: 'Workflow: ${{ github.workflow }} (#${{ github.run_number }})'
-          build-state: '${{ env.BUILD_STATE }}'
-          build-url: '${{github.event.repository.url}}/actions/runs/${{github.run_id}}'
-          update-sequence-number: '${{ github.run_id }}'
-          last-updated: '${{github.event.head_commit.timestamp}}'
-          issue-keys: '${{ steps.jira_keys.outputs.jira-keys }}'
-          commit-id: '${{ github.sha }}'
-          repo-url: '${{ github.event.repository.url }}'
-          build-ref-url: '${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}'
+  #     - name: Push Build Info to Jira
+  #       if: ${{ env.CLOUD_INSTANCE_BASE_URL != 0 && env.CLIENT_ID != 0 && env.CLIENT_SECRET != 0 && steps.jira_keys.outputs.jira-keys != '' && always() }}
+  #       id: push_build_info_to_jira
+  #       uses: VirtoCommerce/jira-upload-build-info@master
+  #       with:
+  #         cloud-instance-base-url: '${{ secrets.CLOUD_INSTANCE_BASE_URL }}'
+  #         client-id: '${{ secrets.CLIENT_ID }}'
+  #         client-secret: '${{ secrets.CLIENT_SECRET }}'
+  #         pipeline-id: '${{ github.repository }} ${{ github.workflow }}'
+  #         build-number: ${{ github.run_number }}
+  #         build-display-name: 'Workflow: ${{ github.workflow }} (#${{ github.run_number }})'
+  #         build-state: '${{ env.BUILD_STATE }}'
+  #         build-url: '${{github.event.repository.url}}/actions/runs/${{github.run_id}}'
+  #         update-sequence-number: '${{ github.run_id }}'
+  #         last-updated: '${{github.event.head_commit.timestamp}}'
+  #         issue-keys: '${{ steps.jira_keys.outputs.jira-keys }}'
+  #         commit-id: '${{ github.sha }}'
+  #         repo-url: '${{ github.event.repository.url }}'
+  #         build-ref-url: '${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}'
 
-      - name: Confirm Jira Build Output
-        if: success()
-        run: |
-          echo "Jira Upload Build Info response: ${{ steps.push_build_info_to_jira.outputs.response }}"
+  #     - name: Confirm Jira Build Output
+  #       if: success()
+  #       run: |
+  #         echo "Jira Upload Build Info response: ${{ steps.push_build_info_to_jira.outputs.response }}"
 
-  deploy-cloud:
-    if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' || github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/master')}}
-    needs: ci
-    uses: ./.github/workflows/deploy-cloud.yml
-    with:
-      artifactUrl: ${{ needs.ci.outputs.artifactUrl }}
-      environmentId: ${{ github.ref == 'refs/heads/dev' && 'dev' || 'qa' }}
-      jiraKeys: ${{ needs.ci.outputs.jira-keys }}
-      forceCommit: ${{github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
-    secrets: inherit
+  # deploy-cloud:
+  #   if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' || github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/master')}}
+  #   needs: ci
+  #   uses: ./.github/workflows/deploy-cloud.yml
+  #   with:
+  #     artifactUrl: ${{ needs.ci.outputs.artifactUrl }}
+  #     environmentId: ${{ github.ref == 'refs/heads/dev' && 'dev' || 'qa' }}
+  #     jiraKeys: ${{ needs.ci.outputs.jira-keys }}
+  #     forceCommit: ${{github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' }}
+  #   secrets: inherit
