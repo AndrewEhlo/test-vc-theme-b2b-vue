@@ -153,18 +153,19 @@ jobs:
         run: |
           gh release create ${{ env.VERSION }} \
               --repo="$GITHUB_REPOSITORY" \
-              --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
-              --notes=${{ steps.changelog.outputs.changelog }}
+              --title="${GITHUB_REPOSITORY#*/} ${{ env.VERSION }}" \
+              --notes=${{ steps.changelog.outputs.changelog }} \
+              'artifacts/*.zip#${{ env.VERSION }}'
               
-      - name: Upload Release Asset
-        if: ${{ github.ref == 'refs/heads/master' }}
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: artifacts/${{ steps.blobRelease.outputs.blobId }}
-          asset_name: ${{ steps.blobRelease.outputs.blobId }}
-          asset_content_type: application/zip
+      # - name: Upload Release Asset
+      #   if: ${{ github.ref == 'refs/heads/master' }}
+      #   id: upload-release-asset
+      #   uses: actions/upload-release-asset@v1
+      #   with:
+      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
+      #     asset_path: artifacts/${{ steps.blobRelease.outputs.blobId }}
+      #     asset_name: ${{ steps.blobRelease.outputs.blobId }}
+      #     asset_content_type: application/zip
 
       - name: Set artifactUrl value
         id: artifactUrl
