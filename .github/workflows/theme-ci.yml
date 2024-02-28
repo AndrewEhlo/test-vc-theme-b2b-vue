@@ -101,8 +101,8 @@ jobs:
 
     - name: Create GH Release
       run: |
-        gh release create ${{ env.VERSION }} \
+        gh release create ${{ steps.image.outputs.fullVersion }} \
               --repo="$GITHUB_REPOSITORY" \
-              --title="${GITHUB_REPOSITORY#*/} ${{ env.VERSION }}" \
+              --title="${GITHUB_REPOSITORY#*/} ${{ steps.image.outputs.fullVersion }}" \
               --notes=${{ steps.changelog.outputs.changelog }} \
-              "artifacts/${GITHUB_REPOSITORY#*/}-${{ env.VERSION }}.zip#${GITHUB_REPOSITORY#*/}-${{ env.VERSION }}.zip"
+              "artifacts/${GITHUB_REPOSITORY#*/}-${{ steps.image.outputs.fullVersion }}.zip#${GITHUB_REPOSITORY#*/}-${{ steps.image.outputs.fullVersion }}.zip"
