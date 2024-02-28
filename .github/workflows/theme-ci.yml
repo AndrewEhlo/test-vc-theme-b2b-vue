@@ -69,9 +69,9 @@ jobs:
     #   with:
     #     projectVersion: ${{ steps.image.outputs.fullVersion }}
 
-    - name: Update package.json Version
-      run: |
-        yarn version ${{ env.VERSION }}
+    # - name: Update package.json Version
+    #   run: |
+    #     yarn version ${{ env.VERSION }}
     - name: Install dependencies
       run: |
         yarn install
