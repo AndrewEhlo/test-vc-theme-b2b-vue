@@ -37,20 +37,20 @@ jobs:
         fetch-depth: 0
         ref: ${{ github.GITHUB_REF_NAME }}
 
-    - name: Set up Node 20
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
+    # - name: Set up Node 20
+    #   uses: actions/setup-node@v4
+    #   with:
+    #     node-version: '20'
 
-    - name: Enable corepack
-      run: |
-        corepack enable
+    # - name: Enable corepack
+    #   run: |
+    #     corepack enable
 
     # - name: Setup sonarqube
     #   uses: warchant/setup-sonar-scanner@v8
 
     - name: Get Image Version
-      uses: VirtoCommerce/vc-github-actions/get-image-version@master
+      uses: VirtoCommerce/vc-github-actions/get-image-version@VCST-571
       id: image
 
     - name: Set VERSION_SUFFIX variable
@@ -73,21 +73,21 @@ jobs:
     # - name: Update package.json Version
     #   run: |
     #     yarn version ${{ env.VERSION }}
-    - name: Install dependencies
-      run: |
-        yarn install
-    - name: Build
-      run: |
-        yarn build
-    - name: Unit Tests
-      run: |
-        yarn test:unit --run
-    - name: Typing Tests
-      run: |
-        yarn test:typing --run
-    - name: Packaging
-      run: |
-        yarn compress
+    # - name: Install dependencies
+    #   run: |
+    #     yarn install
+    # - name: Build
+    #   run: |
+    #     yarn build
+    # - name: Unit Tests
+    #   run: |
+    #     yarn test:unit --run
+    # - name: Typing Tests
+    #   run: |
+    #     yarn test:typing --run
+    # - name: Packaging
+    #   run: |
+    #     yarn compress
 
     # - name: Publish
     #   if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' || (github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/master')}}
@@ -100,10 +100,10 @@ jobs:
     # - name: Install VirtoCommerce.GlobalTool
     #   uses: VirtoCommerce/vc-github-actions/setup-vcbuild@master
 
-    - name: Create GH Release
-      run: |
-        gh release create ${{ steps.image.outputs.shortVersion }} \
-              --repo="$GITHUB_REPOSITORY" \
-              --title="${GITHUB_REPOSITORY#*/} ${{ steps.image.outputs.shortVersion }}" \
-              --notes=${{ steps.changelog.outputs.changelog }} \
-              "artifacts/vc-theme-b2b-vue-${{ steps.image.outputs.shortVersion }}.zip#${GITHUB_REPOSITORY#*/}-${{ steps.image.outputs.shortVersion }}.zip"
+    # - name: Create GH Release
+    #   run: |
+    #     gh release create ${{ steps.image.outputs.shortVersion }} \
+    #           --repo="$GITHUB_REPOSITORY" \
+    #           --title="${GITHUB_REPOSITORY#*/} ${{ steps.image.outputs.shortVersion }}" \
+    #           --notes=${{ steps.changelog.outputs.changelog }} \
+    #           "artifacts/vc-theme-b2b-vue-${{ steps.image.outputs.shortVersion }}.zip#${GITHUB_REPOSITORY#*/}-${{ steps.image.outputs.shortVersion }}.zip"
