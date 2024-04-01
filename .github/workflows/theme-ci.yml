@@ -61,9 +61,9 @@ jobs:
           echo "VERSION_SUFFIX=${{ steps.image.outputs.suffix }}" >> $GITHUB_ENV
         fi;
 
-    - name: Get changelog
-      id: changelog
-      uses: VirtoCommerce/vc-github-actions/changelog-generator@master
+    # - name: Get changelog
+    #   id: changelog
+    #   uses: VirtoCommerce/vc-github-actions/changelog-generator@master
 
     # - name: SonarCloud Scan
     #   uses: VirtoCommerce/vc-github-actions/sonar-theme@master
