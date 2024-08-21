@@ -30,6 +30,8 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
       BLOB_SAS: ${{ secrets.BLOB_TOKEN }}
       VERSION_SUFFIX: ""
+    outputs:
+      VERSION_SUFFIX: '${{ steps.versionSuffix.outputs.VERSION_SUFFIX }}'
 
     steps:
     - uses: actions/checkout@v4
@@ -54,6 +56,7 @@ jobs:
       id: image
 
     - name: Set VERSION_SUFFIX variable
+      id: versionSuffix
       run: |
         if [ '${{ github.event_name }}' = 'workflow_dispatch' ]; then
           echo "VERSION_SUFFIX=${{ steps.image.outputs.fullSuffix }}" >> $GITHUB_OUTPUT
@@ -116,7 +119,7 @@ jobs:
         store: [B2B-store,B2C]
     runs-on: ubuntu-latest
     env:
-      AARGO_APP_NAME: 'vcst-dev'
+      ARGO_APP_NAME: 'vcst-dev'
     #   ARTIFACT_URL: ''
     steps:
       # - name: Install vc-build
