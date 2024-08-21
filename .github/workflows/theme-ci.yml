@@ -56,9 +56,9 @@ jobs:
     - name: Set VERSION_SUFFIX variable
       run: |
         if [ '${{ github.event_name }}' = 'workflow_dispatch' ]; then
-          echo "VERSION_SUFFIX=${{ steps.image.outputs.fullSuffix }}" >> $GITHUB_ENV
+          echo "VERSION_SUFFIX=${{ steps.image.outputs.fullSuffix }}" >> $GITHUB_OUTPUT
         else
-          echo "VERSION_SUFFIX=${{ steps.image.outputs.suffix }}" >> $GITHUB_ENV
+          echo "VERSION_SUFFIX=${{ steps.image.outputs.suffix }}" >> $GITHUB_OUTPUT
         fi;
 
     # - name: Get changelog
@@ -107,3 +107,28 @@ jobs:
     #           --title="${GITHUB_REPOSITORY#*/} ${{ steps.image.outputs.shortVersion }}" \
     #           --notes=${{ steps.changelog.outputs.changelog }} \
     #           "artifacts/vc-theme-b2b-vue-${{ steps.image.outputs.shortVersion }}.zip#${GITHUB_REPOSITORY#*/}-${{ steps.image.outputs.shortVersion }}.zip"
+  
+  gitops:
+    # if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' || github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/master')}}
+    needs: ci
+    strategy:
+      matrix:
+        store: [B2B-store,B2C]
+    runs-on: ubuntu-latest
+    env:
+      AARGO_APP_NAME: 'vcst-dev'
+    #   ARTIFACT_URL: ''
+    steps:
+      # - name: Install vc-build
+      #   run: |
+      #     dotnet tool install --global VirtoCommerce.GlobalTool
+    
+      # - name: Get theme version
+      #   id: theme-version
+      #   run: |
+      #       echo "ARTIFACT_URL=$(cat ./theme/artifact.json | jq -r '.URL')" >> $GITHUB_ENV
+      - name: Update environment
+        run: |
+            export PARAMETER_NAME=$(echo "themes.${{ matrix.store }}" | xargs)
+            export PARAMETER_VALUE=$(echo "${{ needs.ci.outputs.VERSION_SUFFIX }}" | xargs)
+            echo "vc-build CloudEnvSetParameter -EnvironmentName ${{ env.ARGO_APP_NAME }} -CloudToken ${{ secrets.VCST_PLATFORM_TOKEN }} -HelmParameters $PARAMETER_NAME=$PARAMETER_VALUE"
