@@ -121,6 +121,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ARGO_APP_NAME: 'vcst-dev'
+      ARGO_APP_NAME1: 'vcst-dev'
     steps:
       - name: Update environment
         run: |
