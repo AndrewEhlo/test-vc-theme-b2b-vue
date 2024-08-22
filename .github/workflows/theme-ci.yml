@@ -63,6 +63,7 @@ jobs:
         else
           echo "VERSION_SUFFIX=${{ steps.image.outputs.suffix }}" >> $GITHUB_OUTPUT
         fi;
+        echo "github.base_ref is ${{ github.base_ref }}"
 
     # - name: Get changelog
     #   id: changelog
@@ -113,7 +114,7 @@ jobs:
   
   gitops:
     # if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' || github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/master')}}
-    if: ${{ github.base_ref == 'refs/heads/main' && github.event_name == 'pull_request' }}
+    if: ${{ github.base_ref == 'main' && github.event_name == 'pull_request' }}
     needs: ci
     strategy:
       matrix:
