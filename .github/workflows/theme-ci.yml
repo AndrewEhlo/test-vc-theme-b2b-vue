@@ -121,16 +121,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ARGO_APP_NAME: 'vcst-dev'
-    #   ARTIFACT_URL: ''
     steps:
-      # - name: Install vc-build
-      #   run: |
-      #     dotnet tool install --global VirtoCommerce.GlobalTool
-    
-      # - name: Get theme version
-      #   id: theme-version
-      #   run: |
-      #       echo "ARTIFACT_URL=$(cat ./theme/artifact.json | jq -r '.URL')" >> $GITHUB_ENV
       - name: Update environment
         run: |
             export PARAMETER_NAME=$(echo "themes.${{ matrix.store }}" | xargs)
