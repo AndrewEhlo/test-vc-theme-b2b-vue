@@ -113,7 +113,7 @@ jobs:
   
   gitops:
     # if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' || github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/master')}}
-    if: ${{ github.event.pull_request.base.ref == 'refs/heads/main' && github.event_name == 'pull_request' }}
+    if: ${{ github.base_ref == 'refs/heads/main' && github.event_name == 'pull_request' }}
     needs: ci
     strategy:
       matrix:
