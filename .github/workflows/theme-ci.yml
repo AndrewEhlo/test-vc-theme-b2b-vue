@@ -52,7 +52,7 @@ jobs:
     #   uses: warchant/setup-sonar-scanner@v8
 
     - name: Get Image Version
-      uses: VirtoCommerce/vc-github-actions/get-image-version@master
+      uses: VirtoCommerce/vc-github-actions/get-image-version@master2
       id: image
 
     - name: Set VERSION_SUFFIX variable
