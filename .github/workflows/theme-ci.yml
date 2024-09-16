@@ -63,6 +63,7 @@ jobs:
         else
           echo "VERSION_SUFFIX=${{ steps.image.outputs.suffix }}" >> $GITHUB_OUTPUT
         fi;
+        echo "github.base_ref is ${{ github.base_ref }}"
 
     # - name: Get changelog
     #   id: changelog
@@ -113,7 +114,7 @@ jobs:
   
   gitops:
     # if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' || github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/master')}}
-    if: ${{ github.event.pull_request.base.ref == 'refs/heads/main' && github.event_name == 'pull_request' }}
+    if: ${{ github.base_ref == 'main' && github.event_name == 'pull_request' }}
     needs: ci
     strategy:
       matrix:
@@ -121,16 +122,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ARGO_APP_NAME: 'vcst-dev'
-    #   ARTIFACT_URL: ''
+      ARGO_APP_NAME1: 'vcst-dev'
     steps:
-      # - name: Install vc-build
-      #   run: |
-      #     dotnet tool install --global VirtoCommerce.GlobalTool
-    
-      # - name: Get theme version
-      #   id: theme-version
-      #   run: |
-      #       echo "ARTIFACT_URL=$(cat ./theme/artifact.json | jq -r '.URL')" >> $GITHUB_ENV
       - name: Update environment
         run: |
             export PARAMETER_NAME=$(echo "themes.${{ matrix.store }}" | xargs)
