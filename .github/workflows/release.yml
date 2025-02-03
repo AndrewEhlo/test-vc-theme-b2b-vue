@@ -7,5 +7,7 @@ on:
 jobs:
   release:
     uses: VirtoCommerce/.github/.github/workflows/release.yml@VCST-2521
+    with:
+      patchVersion: 'true'
     secrets:
       envPAT: ${{ secrets.REPO_TOKEN }}
