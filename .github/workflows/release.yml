@@ -3,11 +3,17 @@ name: Release
 
 on:
   workflow_dispatch:
+    inputs:
+      patchVersion:
+        type: boolean
+        required: true
+        default: false
+        description: 'Issue patch version'
 
 jobs:
   release:
     uses: VirtoCommerce/.github/.github/workflows/release.yml@VCST-2521
     with:
-      patchVersion: 'true'
+      patchVersion: ${{inputs.patchVersion}}
     secrets:
       envPAT: ${{ secrets.REPO_TOKEN }}
