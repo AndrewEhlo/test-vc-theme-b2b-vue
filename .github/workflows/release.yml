@@ -9,17 +9,11 @@ on:
         required: true
         default: false
         description: 'Issue patch version'
-      makeLatest:
-        type: boolean
-        required: true
-        default: true
-        description: 'Mark release latest'
 
 jobs:
   release:
     uses: VirtoCommerce/.github/.github/workflows/release.yml@VCST-2521
     with:
       patchVersion: ${{inputs.patchVersion}}
-      makeLatest: ${{inputs.makeLatest}}
     secrets:
       envPAT: ${{ secrets.REPO_TOKEN }}
