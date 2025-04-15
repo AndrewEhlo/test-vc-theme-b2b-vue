@@ -3,6 +3,9 @@
 name: Theme CI
 on:
   workflow_dispatch:
+  push:
+    branches:
+      [master, main, dev]
 
 jobs:
   ci:
