@@ -1,6 +1,6 @@
 # v3.800.11
 # bump-ubuntu-version
-name: Theme CI
+name: Theme Release Hotfix
 on:
   workflow_dispatch:
   push:
