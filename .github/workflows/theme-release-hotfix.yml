@@ -97,12 +97,12 @@ jobs:
       run: |
         yarn compress
 
-    # - name: Publish
-    #   id: publish
-    #   uses: VirtoCommerce/vc-github-actions/publish-theme@master
-    #   with:
-    #     artifactPath: ${{ steps.build.outputs.artifactPath }}
-    #     artifactName: ${{ steps.build.outputs.artifactName }}
+    - name: Publish
+      id: publish
+      uses: VirtoCommerce/vc-github-actions/publish-theme@master
+      with:
+        artifactPath: ${{ steps.build.outputs.artifactPath }}
+        artifactName: ${{ steps.build.outputs.artifactName }}
 
     - name: Create GH Release
       run: |
