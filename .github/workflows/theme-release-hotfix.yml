@@ -33,6 +33,9 @@ jobs:
     # - name: Setup sonarqube
     #   uses: warchant/setup-sonar-scanner@v8
 
+    - name: Install VirtoCommerce.GlobalTool
+      uses: VirtoCommerce/vc-github-actions/setup-vcbuild@master
+    
     - name: Increment Version
       run: |
         vc-build IncrementPatch
