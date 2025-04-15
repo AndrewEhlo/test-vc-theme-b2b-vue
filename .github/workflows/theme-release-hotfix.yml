@@ -36,6 +36,11 @@ jobs:
     - name: Install VirtoCommerce.GlobalTool
       uses: VirtoCommerce/vc-github-actions/setup-vcbuild@master
     
+    - name: Setup Git Credentials
+      uses: VirtoCommerce/vc-github-actions/setup-git-credentials-github@master
+      with:
+        githubToken: ${{ secrets.REPO_TOKEN }}
+    
     - name: Increment Version
       run: |
         vc-build IncrementPatch
