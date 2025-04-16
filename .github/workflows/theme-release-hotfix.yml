@@ -3,9 +3,24 @@
 name: Theme Release Hotfix
 on:
   workflow_dispatch:
-  # push:
-  #   branches:
-  #     [master, main, dev]
+  push:
+    paths-ignore:
+      #- '.github/**'
+      - 'docs/**'
+      - 'build/**'
+      - 'README.md'
+      - 'LICENSE'
+    branches:
+      [master, dev]
+  pull_request:
+    # branches:
+    #   [master, dev, main]
+    # paths-ignore:
+    #   - '.github/**'
+    #   - 'docs/**'
+    #   - 'build/**'
+    #   - 'README.md'
+    #   - 'LICENSE'
 
 jobs:
   ci:
