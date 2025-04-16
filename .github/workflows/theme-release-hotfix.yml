@@ -12,15 +12,6 @@ on:
       - 'LICENSE'
     branches:
       [master, dev]
-  pull_request:
-    # branches:
-    #   [master, dev, main]
-    # paths-ignore:
-    #   - '.github/**'
-    #   - 'docs/**'
-    #   - 'build/**'
-    #   - 'README.md'
-    #   - 'LICENSE'
 
 jobs:
   ci:
