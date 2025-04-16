@@ -13,7 +13,7 @@ jobs:
     env: 
       # SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
       GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
-      # BLOB_SAS: ${{ secrets.BLOB_TOKEN }}
+      BLOB_SAS: ${{ secrets.BLOB_TOKEN }}
       VERSION_SUFFIX: ""
 
     steps:
@@ -103,6 +103,7 @@ jobs:
       with:
         artifactPath: ${{ steps.build.outputs.artifactPath }}
         artifactName: ${{ steps.build.outputs.artifactName }}
+        blobUrl: https://testazcopy645.blob.core.windows.net/packages
 
     - name: Create GH Release
       run: |
