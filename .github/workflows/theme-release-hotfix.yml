@@ -9,7 +9,6 @@ on:
       - 'docs/**'
       - 'build/**'
       - 'README.md'
-      - 'LICENSE'
     branches:
       [master, dev]
 
