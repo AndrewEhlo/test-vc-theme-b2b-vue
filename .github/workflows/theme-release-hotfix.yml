@@ -142,4 +142,4 @@ jobs:
               --repo="$GITHUB_REPOSITORY" \
               --title="${GITHUB_REPOSITORY#*/} ${{ steps.image.outputs.shortVersion }}" \
               --notes=${{ steps.changelog.outputs.changelog }} \
-              "artifacts/${GITHUB_REPOSITORY#*/}-${{ steps.image.outputs.shortVersion }}.zip#${GITHUB_REPOSITORY#*/}-${{ steps.image.outputs.shortVersion }}.zip"
+              "./artifacts/${GITHUB_REPOSITORY#*/}-${{ steps.image.outputs.shortVersion }}.zip#${GITHUB_REPOSITORY#*/}-${{ steps.image.outputs.shortVersion }}.zip"
