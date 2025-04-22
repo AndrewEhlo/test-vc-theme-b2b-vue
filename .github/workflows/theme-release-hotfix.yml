@@ -69,11 +69,11 @@ jobs:
       run: |
         yarn install
 
-    - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        # SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    # - name: SonarCloud Scan
+    #   uses: SonarSource/sonarcloud-github-action@master
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #     # SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     
     - name: Build
       run: |
@@ -96,7 +96,6 @@ jobs:
     #   uses: VirtoCommerce/vc-github-actions/publish-blob-release@master
     #   with:
     #     blobSAS: ${{ secrets.BLOB_TOKEN }}
-    #     blobUrl: https://testazcopy645.blob.core.windows.net/packages
     
     - name: Create GH Release
       run: |
