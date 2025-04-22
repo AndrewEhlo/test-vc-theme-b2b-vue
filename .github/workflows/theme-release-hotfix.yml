@@ -138,10 +138,8 @@ jobs:
     
     - name: Create GH Release
       run: |
-        pwd
-        ls -l
         gh release create ${{ steps.image.outputs.shortVersion }} \
               --repo="$GITHUB_REPOSITORY" \
-              --title="${GITHUB_REPOSITORY#*/} ${{ steps.image.outputs.shortVersion }}" \
+              --title="test-${GITHUB_REPOSITORY#*/} ${{ steps.image.outputs.shortVersion }}" \
               --notes=${{ steps.changelog.outputs.changelog }} \
-              "./artifacts/${GITHUB_REPOSITORY#*/}-${{ steps.image.outputs.shortVersion }}.zip#${GITHUB_REPOSITORY#*/}-${{ steps.image.outputs.shortVersion }}.zip"
+              "./artifacts/test-${GITHUB_REPOSITORY#*/}-${{ steps.image.outputs.shortVersion }}.zip#${GITHUB_REPOSITORY#*/}-${{ steps.image.outputs.shortVersion }}.zip"
