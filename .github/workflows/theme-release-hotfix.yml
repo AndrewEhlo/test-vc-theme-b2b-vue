@@ -96,9 +96,9 @@ jobs:
     
     - name: Create GH Release
       run: |
-        gh release create ${{ steps.image.outputs.shortVersion }} \
+        gh release create ${{ steps.image.outputs.prefix }} \
               --generate-notes \
               --latest=false \
               --repo="$GITHUB_REPOSITORY" \
-              --title="${GITHUB_REPOSITORY#*/} ${{ steps.image.outputs.shortVersion }}" \
-              "./artifacts/${GITHUB_REPOSITORY#*/}-${{ steps.image.outputs.shortVersion }}.zip#${GITHUB_REPOSITORY#*/}-${{ steps.image.outputs.shortVersion }}.zip"
+              --title="${GITHUB_REPOSITORY#*/} ${{ steps.image.outputs.prefix }}" \
+              "./artifacts/${GITHUB_REPOSITORY#*/}-${{ steps.image.outputs.prefix }}.zip#${GITHUB_REPOSITORY#*/}-${{ steps.image.outputs.prefix }}.zip"
