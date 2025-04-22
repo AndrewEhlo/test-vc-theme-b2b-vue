@@ -1,6 +1,6 @@
 {
-  "name": "test-vc-theme-b2b-vue",
-  "version": "1.63.2",
+  "name": "vc-theme-b2b-vue",
+  "version": "1.61.1",
   "private": true,
   "type": "module",
   "scripts": {
