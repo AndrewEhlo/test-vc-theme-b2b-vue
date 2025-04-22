@@ -3,14 +3,6 @@
 name: Theme Release Hotfix
 on:
   workflow_dispatch:
-  push:
-    paths-ignore:
-      #- '.github/**'
-      - 'docs/**'
-      - 'build/**'
-
-    branches:
-      [master, dev]
 
 jobs:
   ci:
