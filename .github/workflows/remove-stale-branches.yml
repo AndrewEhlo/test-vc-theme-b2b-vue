@@ -17,6 +17,9 @@ on:
 jobs:
   branch-cleanup:
     runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      pull-requests: read
     # env: 
     #   GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
 
@@ -28,7 +31,7 @@ jobs:
     - name: Remove stale branches
       shell: pwsh
       env:
-        GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
+        GH_TOKEN: ${{ secrets.REPO_TOKEN }}
       run: |
         $repo = "AndrewEhlo/test-vc-theme-b2b-vue"
         $authorForRemove = "Andrew"
