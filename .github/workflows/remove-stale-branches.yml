@@ -51,7 +51,7 @@ jobs:
                     git push origin --delete $branch
                 }
                 else {
-                    Write-Host "  Dry run: git branch -d $branch"
+                    Write-Host "  DRY RUN: git branch -d $branch"
                     # Write-Host "  Dry run: git push origin --delete $branch"
                 }
                 if ($LASTEXITCODE -ne 0) {
@@ -77,10 +77,8 @@ jobs:
                 $lastCommit = $((gh api repos/$repo/commits?sha=$cleanBranchName) | ConvertFrom-Json | Select-Object -First 1).commit.author
                 $author = $lastCommit.name
                 $date = [datetime]$lastCommit.date
-                Write-Host "Author: $author"
-                Write-Host "Date: $date"
                 $daysSinceLastCommit = $((Get-Date) - $date).Days
-                Write-Host "Days since last commit: $daysSinceLastCommit"
+                Write-Host "Last commit was made by $author $daysSinceLastCommit days ago"
                 if ($daysSinceLastCommit -gt $retentionDays -and $author -eq $authorForRemove) {
                     if ($daysSinceLastCommit -gt $retentionDays) {
                         Write-Host "Branch is older than $retentionDays days"
@@ -96,7 +94,7 @@ jobs:
                     }
                     else {
                         # Write-Host "Dry run: git branch -d $cleanBranchName"
-                        Write-Host "Dry run: git push origin --delete $cleanBranchName"
+                        Write-Host "DRY RUN: git push origin --delete $cleanBranchName"
                     }
                     if ($LASTEXITCODE -ne 0) {
                         Write-Host "Failed to delete branch '$branch'"
