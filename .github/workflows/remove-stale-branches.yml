@@ -27,6 +27,7 @@ jobs:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
+        ref: 'dev'
 
     - name: Remove stale branches
       shell: pwsh
@@ -40,7 +41,7 @@ jobs:
         $dryRun = $true
 
         Write-Host "Deleting MERGED branches:"
-        $mergedBranches = git branch -r --merged
+        $mergedBranches = git branch -r --merged # lists remote-tracking branches that have been merged into the current branch
         foreach ($branch in $mergedBranches) {
             $branch = $branch.Replace(" ", "")
             if ($branch -ne "origin/main" -and $branch -ne "origin/master" -and $branch -ne "origin/dev" -and $branch -notlike "*origin/HEAD*") {
