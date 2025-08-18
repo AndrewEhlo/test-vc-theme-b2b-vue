@@ -9,8 +9,7 @@ on:
         type: string
         default: 'true'
   push:
-    branches:
-      [VCST-2233]
+    branches: [VCST-2233]
   # schedule:
   #   - cron: '30 14 * * *' # Runs daily at 2:30 PM UTC
 
@@ -38,7 +37,7 @@ jobs:
         $authorForRemove = "Andrew"
         $branch = ''
         $retentionDays = 90
-        $dryRun = $true
+        $dryRun = ${{ github.event.inputs.dryRun }} #$true
 
         Write-Host "Deleting MERGED branches:"
         $mergedBranches = git branch -r --merged # lists remote-tracking branches that have been merged into the current branch
