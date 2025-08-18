@@ -8,6 +8,9 @@ on:
         required: true
         type: string
         default: 'true'
+  push:
+    branches:
+      [VCST-2233]
   # schedule:
   #   - cron: '30 14 * * *' # Runs daily at 2:30 PM UTC
 
