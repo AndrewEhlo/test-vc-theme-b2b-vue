@@ -45,20 +45,20 @@ jobs:
             $branch = $branch.Replace(" ", "")
             if ($branch -ne "origin/main" -and $branch -ne "origin/master" -and $branch -ne "origin/dev" -and $branch -notlike "*origin/HEAD*") {
                 #-notlike "*origin/HEAD*" exclude A symbolic reference that represents the default branch of the remote repository
-                Write-Host "Deleting branch $branch..."
+                Write-Host "  Deleting branch $branch..."
                 if ($dryRun) {
-                    Write-Host "Dry run: git branch -d $branch"
-                    Write-Host "Dry run: git push origin --delete $branch"
+                    Write-Host "  Dry run: git branch -d $branch"
+                    Write-Host "  Dry run: git push origin --delete $branch"
                 }
                 else {
                     git branch -d $branch
                     git push origin --delete $branch
                 }
                 if ($LASTEXITCODE -ne 0) {
-                    Write-Host "Failed to delete branch '$branch'"
+                    Write-Host "  Failed to delete branch '$branch'"
                 }
                 else {
-                    Write-Host "...'$branch' branch removed"
+                    Write-Host "  ...'$branch' branch removed"
                 }
             }
         }
