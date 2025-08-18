@@ -47,12 +47,12 @@ jobs:
                 #-notlike "*origin/HEAD*" exclude A symbolic reference that represents the default branch of the remote repository
                 Write-Host "  Deleting branch $branch..."
                 if ($dryRun -eq $false) {
-                    git branch -d $branch
+                    # git branch -d $branch
                     git push origin --delete $branch
                 }
                 else {
                     Write-Host "  Dry run: git branch -d $branch"
-                    Write-Host "  Dry run: git push origin --delete $branch"
+                    # Write-Host "  Dry run: git push origin --delete $branch"
                 }
                 if ($LASTEXITCODE -ne 0) {
                     Write-Host "  Failed to delete branch '$branch'"
@@ -91,11 +91,11 @@ jobs:
                     Write-Host "Deleting '$cleanBranchName' branch"
                     Write-Host "Deleting '$cleanBranchName' branch"
                     if ($dryRun -eq $false) {
-                        git branch -d $cleanBranchName
+                        # git branch -d $cleanBranchName
                         git push origin --delete $cleanBranchName
                     }
                     else {
-                        Write-Host "Dry run: git branch -d $cleanBranchName"
+                        # Write-Host "Dry run: git branch -d $cleanBranchName"
                         Write-Host "Dry run: git push origin --delete $cleanBranchName"
                     }
                     if ($LASTEXITCODE -ne 0) {
