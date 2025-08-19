@@ -78,7 +78,7 @@ jobs:
                 $author = $lastCommit.name
                 $date = [datetime]$lastCommit.date
                 $daysSinceLastCommit = $((Get-Date) - $date).Days
-                Write-Host "Last commit was made by $author $daysSinceLastCommit days ago"
+                Write-Host "Last commit by $author $daysSinceLastCommit days ago"
                 if ($daysSinceLastCommit -gt $retentionDays -and $author -eq $authorForRemove) {
                     if ($daysSinceLastCommit -gt $retentionDays) {
                         Write-Host "Branch is older than $retentionDays days"
@@ -87,14 +87,21 @@ jobs:
                         Write-Host "Branch is by $authorForRemove"
                     }
                     Write-Host "Deleting '$cleanBranchName' branch"
-                    Write-Host "Deleting '$cleanBranchName' branch"
+                    $prNumber = (gh pr list --repo $repo --state open --head $cleanBranchName --json number | ConvertFrom-Json).number
                     if ($dryRun -eq $false) {
                         # git branch -d $cleanBranchName
                         git push origin --delete $cleanBranchName
+                        if ($prNumber) {
+                            Write-Host "Closing corresponding PR $prNumber"
+                            gh pr close $prNumber --repo $repo
+                        }
                     }
                     else {
                         # Write-Host "Dry run: git branch -d $cleanBranchName"
                         Write-Host "DRY RUN: git push origin --delete $cleanBranchName"
+                        if ($prNumber) {
+                            Write-Host "DRY RUN: Closing corresponding PR #$prNumber"
+                        }
                     }
                     if ($LASTEXITCODE -ne 0) {
                         Write-Host "Failed to delete branch '$branch'"
