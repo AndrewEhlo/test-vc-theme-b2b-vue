@@ -43,17 +43,17 @@ jobs:
         $mergedBranches = git branch -r --merged # lists remote-tracking branches that have been merged into the current branch
         # foreach ($branch in $mergedBranches) {
             $branch = $mergedBranches[1]    
-            $branch = $branch.Replace(" ", "")
-            if ($branch -ne "origin/main" -and $branch -ne "origin/master" -and $branch -ne "origin/dev" -and $branch -notlike "*origin/HEAD*") {
-                #-notlike "*origin/HEAD*" exclude A symbolic reference that represents the default branch of the remote repository
+            $cleanBranchName = $branch.Replace("origin/", "").Replace(' ', '')
+            if ($cleanBranchName -ne "main" -and $cleanBranchName -ne "master" -and $cleanBranchName -ne "dev" -and $cleanBranchName -notlike "*HEAD*") {
+                #-notlike "*origin/HEAD*" exclude a symbolic reference that represents the default branch of the remote repository
                 Write-Host "  Deleting branch $branch..."
                 if ($dryRun -eq $false) {
                     # git branch -d $branch
                     git push origin --delete $branch
                 }
                 else {
-                    Write-Host "  DRY RUN: git branch -d $branch"
-                    # Write-Host "  Dry run: git push origin --delete $branch"
+                    # Write-Host "  DRY RUN: git branch -d $branch"
+                    Write-Host "  DRY RUN: git push origin --delete $branch"
                 }
                 if ($LASTEXITCODE -ne 0) {
                     Write-Host "  Failed to delete branch '$branch'"
