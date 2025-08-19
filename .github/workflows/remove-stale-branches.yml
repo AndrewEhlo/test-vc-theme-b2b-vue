@@ -42,26 +42,26 @@ jobs:
         Write-Host "Deleting MERGED branches:"
         $mergedBranches = git branch -r --merged # lists remote-tracking branches that have been merged into the current branch
         # foreach ($branch in $mergedBranches) {
-            $branch = $mergedBranches[1]    
-            $cleanBranchName = $branch.Replace("origin/", "").Replace(' ', '')
-            if ($cleanBranchName -ne "main" -and $cleanBranchName -ne "master" -and $cleanBranchName -ne "dev" -and $cleanBranchName -notlike "*HEAD*") {
-                #-notlike "*origin/HEAD*" exclude a symbolic reference that represents the default branch of the remote repository
-                Write-Host "  Deleting branch $branch..."
-                if ($dryRun -eq $false) {
-                    # git branch -d $branch
-                    git push origin --delete $branch
-                }
-                else {
-                    # Write-Host "  DRY RUN: git branch -d $branch"
-                    Write-Host "  DRY RUN: git push origin --delete $branch"
-                }
-                if ($LASTEXITCODE -ne 0) {
-                    Write-Host "  Failed to delete branch '$branch'"
-                }
-                else {
-                    Write-Host "  ...'$branch' branch removed"
-                }
+        $branch = $mergedBranches[1]    
+        $cleanBranchName = $branch.Replace("origin/", "").Replace(' ', '')
+        if ($cleanBranchName -ne "main" -and $cleanBranchName -ne "master" -and $cleanBranchName -ne "dev" -and $cleanBranchName -notlike "*HEAD*") {
+            #-notlike "*origin/HEAD*" exclude a symbolic reference that represents the default branch of the remote repository
+            Write-Host "  Deleting branch $cleanBranchName..."
+            if ($dryRun -eq $false) {
+                # git branch -d $branch
+                git push origin --delete $cleanBranchName
             }
+            else {
+                # Write-Host "  DRY RUN: git branch -d $branch"
+                Write-Host "  DRY RUN: git push origin --delete $cleanBranchName"
+            }
+            if ($LASTEXITCODE -ne 0) {
+                Write-Host "  Failed to delete branch '$cleanBranchName'"
+            }
+            else {
+                Write-Host "  ...'$cleanBranchName' branch removed"
+            }
+        }
         # }
         Write-Host "Completed deleting merged branches"
         Write-Host "`n"
